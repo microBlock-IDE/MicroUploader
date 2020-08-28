@@ -31,8 +31,8 @@ Installing Python 3: https://docs.python-guide.org/starting/install3/linux/
 Install pyserial and PySide2
 
 ```shell
-pip install pyserial
-pip install PySide2
+pip3 install pyserial
+pip3 install PySide2
 ```
 
 Clone this project from master
@@ -56,7 +56,7 @@ cd MicroUploader-master
 Run `MicroUploader.py` via Python3
 
 ```shell
-python ./MicroUploader.py
+sudo python3 ./MicroUploader.py
 ```
 
 if you found error `libxcb-xinerama.so.0: cannot open shared object file: No such file or directory` install `libxcb-xinerama`
