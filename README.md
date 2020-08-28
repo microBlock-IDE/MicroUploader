@@ -50,13 +50,19 @@ unzip MicroUploader.zip
 Enter to MicroUploader folder
 
 ```shell
-cd MicroUploader
+cd MicroUploader-master
 ```
 
 Run `MicroUploader.py` via Python3
 
 ```shell
 python ./MicroUploader.py
+```
+
+if you found error `libxcb-xinerama.so.0: cannot open shared object file: No such file or directory` install `libxcb-xinerama`
+
+```shell
+apt-get install libxcb-xinerama
 ```
 
 MicroPython windows will open then do three step
