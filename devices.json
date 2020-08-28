@@ -1,0 +1,40 @@
+[
+    {
+        "name": "ESP32 Dev Module",
+        "firmware": [
+            "esp32-idf4-20191220-v1.12.bin",
+			"esp32-idf3-20191220-v1.12.bin",
+			"esp32-idf3-20190529-v1.11.bin",
+			"esp32-idf3-20190125-v1.10.bin",
+			"esp32-idf3-20180511-v1.9.4.bin"
+        ]
+    },
+    {
+        "name": "ESP32 Wrover Module",
+        "firmware": [
+            "esp32spiram-idf4-20191220-v1.12.bin",
+			"esp32spiram-idf3-20191220-v1.12.bin",
+			"esp32spiram-idf3-20190529-v1.11.bin",
+			"esp32spiram-idf3-20190125-v1.10.bin"
+        ]
+    },
+    {
+        "name": "IOXESP32/IOXESP32U",
+        "firmware": [
+            "esp32-idf4-20191220-v1.12.bin",
+			"esp32-idf3-20191220-v1.12.bin",
+			"esp32-idf3-20190529-v1.11.bin",
+			"esp32-idf3-20190125-v1.10.bin",
+			"esp32-idf3-20180511-v1.9.4.bin"
+        ]
+    },
+    {
+        "name": "IOXESP32PS",
+        "firmware": [
+            "esp32spiram-idf4-20191220-v1.12.bin",
+			"esp32spiram-idf3-20191220-v1.12.bin",
+			"esp32spiram-idf3-20190529-v1.11.bin",
+			"esp32spiram-idf3-20190125-v1.10.bin"
+        ]
+    }
+]
