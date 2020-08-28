@@ -59,10 +59,10 @@ Run `MicroUploader.py` via Python3
 sudo python3 ./MicroUploader.py
 ```
 
-if you found error `libxcb-xinerama.so.0: cannot open shared object file: No such file or directory` install `libxcb-xinerama`
+if you found error `libxcb-xinerama.so.0: cannot open shared object file: No such file or directory` install `libxcb-xinerama0`
 
 ```shell
-apt-get install libxcb-xinerama
+apt-get install libxcb-xinerama0
 ```
 
 MicroPython windows will open then do three step
