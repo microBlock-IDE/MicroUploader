@@ -67,16 +67,16 @@ def onUploadBtnClickHandle():
     port = portCombo.currentText()
     firmware = firmwareCombo.currentText()
 
-    firmwarePath = "{}/firmware/{}".format(scriptPath, firmware)
+    firmwarePath = os.path.join(scriptPath, "firmware", firmware)
     print(firmwarePath)
 
-    esptool = "{}/esptool/esptool".format(scriptPath)
+    esptool = os.path.join(scriptPath, "esptool/esptool")
     if sys.platform == "win32":
         esptool = esptool + ".exe"
     elif sys.platform == "darwin":
         esptool = esptool
     else:
-        esptool = "python " + esptool + ".py"
+        esptool = esptool + "-ubuntu-x64"
 
     esptool = os.path.abspath(esptool)
 
@@ -193,7 +193,7 @@ if __name__ == "__main__":
 
     updatePortTimerCB()
 
-    devices = json.loads(open("{}/devices.json".format(scriptPath)).read())
+    devices = json.loads(open(os.path.join(scriptPath, "devices.json")).read())
     for device in devices:
         boardCombo.addItem(device["name"])
     
