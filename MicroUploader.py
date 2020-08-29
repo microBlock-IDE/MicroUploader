@@ -14,6 +14,10 @@ from PySide2.QtCore import *
 from PySide2.QtUiTools import *
 from PySide2 import QtXml
 
+if getattr(sys, 'frozen', False):
+    scriptPath = os.path.dirname(sys.executable)
+elif __file__:
+    scriptPath = os.path.dirname(__file__)
 
 class Main(QWidget):
     def __init__(self):
@@ -22,7 +26,7 @@ class Main(QWidget):
 
     def load_ui(self):
         loader = QUiLoader()
-        path = os.path.join(os.path.dirname(__file__), "form.ui")
+        path = os.path.join(scriptPath, "form.ui")
         ui_file = QFile(path)
         ui_file.open(QFile.ReadOnly)
         self.ui = loader.load(ui_file, self)
@@ -63,10 +67,10 @@ def onUploadBtnClickHandle():
     port = portCombo.currentText()
     firmware = firmwareCombo.currentText()
 
-    firmwarePath = "{}/firmware/{}".format(os.getcwd(), firmware)
+    firmwarePath = "{}/firmware/{}".format(scriptPath, firmware)
     print(firmwarePath)
 
-    esptool = "{}/esptool/esptool".format(os.getcwd())
+    esptool = "{}/esptool/esptool".format(scriptPath)
     if sys.platform == "win32":
         esptool = esptool + ".exe"
     elif sys.platform == "darwin":
@@ -189,7 +193,7 @@ if __name__ == "__main__":
 
     updatePortTimerCB()
 
-    devices = json.loads(open("{}/devices.json".format(os.getcwd())).read())
+    devices = json.loads(open("{}/devices.json".format(scriptPath)).read())
     for device in devices:
         boardCombo.addItem(device["name"])
     
