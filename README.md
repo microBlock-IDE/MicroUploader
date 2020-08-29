@@ -53,6 +53,12 @@ Enter to MicroUploader folder
 cd MicroUploader-master
 ```
 
+chmod `esptool.py` for user can run
+
+```shell
+chmod 755 esptool/esptool.py
+```
+
 Run `MicroUploader.py` via Python3
 
 ```shell
