@@ -7,6 +7,7 @@ import subprocess
 import threading
 import io
 import re
+import shlex
 
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
@@ -80,8 +81,10 @@ def onUploadBtnClickHandle():
 
     esptool = os.path.abspath(esptool)
 
+    deviceInfo = devices[boardCombo.currentIndex()]
+
     global worker
-    worker = UploadWorker(esptool, port, firmwarePath)
+    worker = UploadWorker(esptool, port, firmwarePath, deviceInfo)
     worker.signals.progress.connect(onProgressUpdateHandle)
     worker.signals.result.connect(onResultHandle)
     worker.signals.finished.connect(onUploadEndHandle)
@@ -98,18 +101,19 @@ class UploadWorkerSignals(QObject):
     progress = Signal(int)
 
 class UploadWorker(QRunnable):
-    def __init__(self, esptool, port, bin):
+    def __init__(self, esptool, port, bin, deviceInfo):
         super(UploadWorker, self).__init__()
 
         self.signals = UploadWorkerSignals()    
         self.esptool = esptool
         self.port = port
         self.bin = bin
+        self.deviceInfo = deviceInfo
 
     @Slot()
     def run(self):
-        eraseFlash(self.signals, self.esptool, self.port)
-        uploadBin(self.signals, self.esptool, self.port, self.bin)
+        eraseFlash(self.signals, self.esptool, self.port, self.deviceInfo)
+        uploadBin(self.signals, self.esptool, self.port, self.bin, self.deviceInfo)
         self.signals.finished.emit(0)
 
 
@@ -129,29 +133,29 @@ def onUploadEndHandle():
     msg.setStandardButtons(QMessageBox.Ok)
     msg.exec_()
 
-def eraseFlash(signals, esptool, port):
-    command = [
-        esptool,
-        "--chip", "esp32",
-        "--port", port,
-        "--baud", "1152000",
-        "erase_flash"
-    ]
+def eraseFlash(signals, esptool, port, deviceInfo):
+    command = [ esptool ]
+    command.append("--chip"); command.append(deviceInfo["chip"])
+    command.append("--port"); command.append(port)
+    command.append("--baud"); command.append(str(deviceInfo["speed"]))
+    command.append("erase_flash")
+
+    print(command)
     print(" ".join(command))
     process = subprocess.Popen(command, stdout=subprocess.PIPE)
     for line in io.TextIOWrapper(process.stdout, encoding="utf-8"):
         sys.stdout.write("erase>" + line)
         signals.result.emit(re.sub(r'[\n\r]+', '', line))
 
-def uploadBin(signals, esptool, port, bin):
-    command = [
-        esptool,
-        "--chip", "esp32",
-        "--port", port,
-        "--baud", "1152000",
-        "write_flash", "-z",
-        "0x1000", bin
-    ]
+def uploadBin(signals, esptool, port, binFile, deviceInfo):
+    command = [ esptool ]
+    command.append("--chip"); command.append(deviceInfo["chip"])
+    command.append("--port"); command.append(port)
+    command.append("--baud"); command.append(str(deviceInfo["speed"]))
+    command.append("write_flash"); command.append("-z")
+    command.extend(shlex.split(deviceInfo["flag"]))
+    command.append("0x1000" if deviceInfo["chip"] == "esp32" else "0x0000"); command.append(binFile)
+
     print(" ".join(command))
     process = subprocess.Popen(command, stdout=subprocess.PIPE)
     for line in io.TextIOWrapper(process.stdout, encoding="utf-8"):

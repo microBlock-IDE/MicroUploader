@@ -7,7 +7,10 @@
 			"esp32-idf3-20190529-v1.11.bin",
 			"esp32-idf3-20190125-v1.10.bin",
 			"esp32-idf3-20180511-v1.9.4.bin"
-        ]
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 115200
     },
     {
         "name": "ESP32 Wrover Module",
@@ -16,7 +19,23 @@
 			"esp32spiram-idf3-20191220-v1.12.bin",
 			"esp32spiram-idf3-20190529-v1.11.bin",
 			"esp32spiram-idf3-20190125-v1.10.bin"
-        ]
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 115200
+    },
+    {
+        "name": "Generic ESP8266 Module",
+        "firmware": [
+            "esp8266-20191220-v1.12.bin",
+			"esp8266-20190529-v1.11.bin",
+			"esp8266-20190125-v1.10.bin",
+			"esp8266-20180511-v1.9.4.bin",
+			"esp8266-20171101-v1.9.3.bin"
+        ],
+        "chip": "esp8266",
+        "flag": "--flash_mode dio --flash_size detect",
+        "speed": 115200
     },
     {
         "name": "IOXESP32/IOXESP32U",
@@ -26,7 +45,10 @@
 			"esp32-idf3-20190529-v1.11.bin",
 			"esp32-idf3-20190125-v1.10.bin",
 			"esp32-idf3-20180511-v1.9.4.bin"
-        ]
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 921600
     },
     {
         "name": "IOXESP32PS",
@@ -35,6 +57,149 @@
 			"esp32spiram-idf3-20191220-v1.12.bin",
 			"esp32spiram-idf3-20190529-v1.11.bin",
 			"esp32spiram-idf3-20190125-v1.10.bin"
-        ]
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 921600
+    },
+    {
+        "name": "NodeMCU-32S",
+        "firmware": [
+            "esp32-idf4-20191220-v1.12.bin",
+			"esp32-idf3-20191220-v1.12.bin",
+			"esp32-idf3-20190529-v1.11.bin",
+			"esp32-idf3-20190125-v1.10.bin",
+			"esp32-idf3-20180511-v1.9.4.bin"
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 921600
+    },
+    {
+        "name": "Node32 Lite",
+        "firmware": [
+            "esp32-idf4-20191220-v1.12.bin",
+			"esp32-idf3-20191220-v1.12.bin",
+			"esp32-idf3-20190529-v1.11.bin",
+			"esp32-idf3-20190125-v1.10.bin",
+			"esp32-idf3-20180511-v1.9.4.bin"
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 921600
+    },
+    {
+        "name": "Node32s",
+        "firmware": [
+            "esp32-idf4-20191220-v1.12.bin",
+			"esp32-idf3-20191220-v1.12.bin",
+			"esp32-idf3-20190529-v1.11.bin",
+			"esp32-idf3-20190125-v1.10.bin",
+			"esp32-idf3-20180511-v1.9.4.bin"
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 921600
+    },
+    {
+        "name": "Nano32",
+        "firmware": [
+            "esp32-idf4-20191220-v1.12.bin",
+			"esp32-idf3-20191220-v1.12.bin",
+			"esp32-idf3-20190529-v1.11.bin",
+			"esp32-idf3-20190125-v1.10.bin",
+			"esp32-idf3-20180511-v1.9.4.bin"
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 921600
+    },
+    {
+        "name": "KidBright32",
+        "firmware": [
+            "esp32-idf4-20191220-v1.12.bin",
+			"esp32-idf3-20191220-v1.12.bin",
+			"esp32-idf3-20190529-v1.11.bin",
+			"esp32-idf3-20190125-v1.10.bin",
+			"esp32-idf3-20180511-v1.9.4.bin"
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 115200
+    },
+    {
+        "name": "OpenKB",
+        "firmware": [
+            "esp32-idf4-20191220-v1.12.bin",
+			"esp32-idf3-20191220-v1.12.bin",
+			"esp32-idf3-20190529-v1.11.bin",
+			"esp32-idf3-20190125-v1.10.bin",
+			"esp32-idf3-20180511-v1.9.4.bin"
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 921600
+    },
+    {
+        "name": "IPST-WiFi",
+        "firmware": [
+            "esp32spiram-idf4-20191220-v1.12.bin",
+			"esp32spiram-idf3-20191220-v1.12.bin",
+			"esp32spiram-idf3-20190529-v1.11.bin",
+			"esp32spiram-idf3-20190125-v1.10.bin"
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 921600
+    },
+    {
+        "name": "Senses Weizen",
+        "firmware": [
+            "esp32spiram-idf4-20191220-v1.12.bin",
+			"esp32spiram-idf3-20191220-v1.12.bin",
+			"esp32spiram-idf3-20190529-v1.11.bin",
+			"esp32spiram-idf3-20190125-v1.10.bin"
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size 4MB",
+        "speed": 921600
+    },
+    {
+        "name": "M5Stack",
+        "firmware": [
+            "esp32-idf4-20191220-v1.12.bin",
+			"esp32-idf3-20191220-v1.12.bin",
+			"esp32-idf3-20190529-v1.11.bin",
+			"esp32-idf3-20190125-v1.10.bin",
+			"esp32-idf3-20180511-v1.9.4.bin"
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 921600
+    },
+    {
+        "name": "LOLIN32 Lite",
+        "firmware": [
+            "esp32-idf4-20191220-v1.12.bin",
+			"esp32-idf3-20191220-v1.12.bin",
+			"esp32-idf3-20190529-v1.11.bin",
+			"esp32-idf3-20190125-v1.10.bin",
+			"esp32-idf3-20180511-v1.9.4.bin"
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 921600
+    },
+    {
+        "name": "LOLIN D32 Pro",
+        "firmware": [
+            "esp32spiram-idf4-20191220-v1.12.bin",
+			"esp32spiram-idf3-20191220-v1.12.bin",
+			"esp32spiram-idf3-20190529-v1.11.bin",
+			"esp32spiram-idf3-20190125-v1.10.bin"
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 921600
     }
 ]
