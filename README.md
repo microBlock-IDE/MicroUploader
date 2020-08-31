@@ -4,15 +4,34 @@ Tool for upload MicroPython firmware to your Microcontroller. Now, Support only 
 
 ## Device Support
 
+Support device:
+
+ * Generic ESP8266 Module
+ * NodeMCU-32S
+ * Node32 Lite
+ * Node32s
+ * Nano32
+ * KidBright32
+ * OpenKB
+ * IPST-WiFi
+ * Senses Weizen
+ * M5Stack
+ * LOLIN32 Lite
+ * LOLIN D32 Pro
+
 We tested this:
 
  * IOXESP32
  * IOXESP32U
  * IOXESP32PS
+ * NodeMCU-32S
+ * KidBright32
+ * OpenKB
+ * LOLIN32 Lite
  
 ## Using
 
-### for Windows user
+### Use executable file
 
 download program at Releases page and unzip file then open MicroUploader.exe and do three step
 
@@ -23,8 +42,12 @@ download program at Releases page and unzip file then open MicroUploader.exe and
 
 wait program upload firmware. After done you can try use MicroPython via microblock.app
 
+**executable file have only Windows x64 and Ubuntu x64 and mac OS x64**
 
-### for Linux and mac OS user
+>For macOS and Ubuntu needs chmod 755 for esptool/esptool (for mac OS) , esptool/esptool-ubuntu-x64 (for Ubuntu)
+>For Ubuntu needs run via sudo
+
+### Use Python file
 
 Installing Python 3: https://docs.python-guide.org/starting/install3/linux/
 
