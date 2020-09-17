@@ -1,5 +1,14 @@
 [
     {
+        "name": "KidBright32",
+        "firmware": [
+            "MicroPython.for.KidBright32.V1.0.0.bin"
+        ],
+        "chip": "esp32",
+        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
+        "speed": 115200
+    },
+    {
         "name": "ESP32 Dev Module",
         "firmware": [
             "esp32-idf4-20191220-v1.12.bin",
@@ -113,19 +122,6 @@
         "chip": "esp32",
         "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
         "speed": 921600
-    },
-    {
-        "name": "KidBright32",
-        "firmware": [
-            "esp32-idf4-20191220-v1.12.bin",
-			"esp32-idf3-20191220-v1.12.bin",
-			"esp32-idf3-20190529-v1.11.bin",
-			"esp32-idf3-20190125-v1.10.bin",
-			"esp32-idf3-20180511-v1.9.4.bin"
-        ],
-        "chip": "esp32",
-        "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
-        "speed": 115200
     },
     {
         "name": "OpenKB",
