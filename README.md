@@ -44,8 +44,6 @@ wait program upload firmware. After done you can try use MicroPython via microbl
 
 **executable file have only Windows x64 and Ubuntu x64 and mac OS x64**
 
->For macOS and Ubuntu needs chmod 755 for esptool/esptool (for mac OS) , esptool/esptool-ubuntu-x64 (for Ubuntu)
-
 >For Ubuntu needs run via sudo
 
 ### Use Python file
