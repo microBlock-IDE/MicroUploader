@@ -8,17 +8,20 @@ import threading
 import io
 import re
 import shlex
+import esptool
 
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 from PySide2.QtCore import *
 from PySide2.QtUiTools import *
-from PySide2 import QtXml
+from PySide2 import QtXml, QtCore
 
 if getattr(sys, 'frozen', False):
     scriptPath = os.path.dirname(sys.executable)
 elif __file__:
     scriptPath = os.path.dirname(__file__)
+
+signals = None
 
 class Main(QWidget):
     def __init__(self):
@@ -69,7 +72,6 @@ def onUploadBtnClickHandle():
     firmware = firmwareCombo.currentText()
 
     firmwarePath = os.path.join(scriptPath, "firmware", firmware)
-    print(firmwarePath)
 
     esptool = os.path.join(scriptPath, "esptool/esptool")
     if sys.platform == "win32":
@@ -85,18 +87,14 @@ def onUploadBtnClickHandle():
 
     global worker
     worker = UploadWorker(esptool, port, firmwarePath, deviceInfo)
-    worker.signals.progress.connect(onProgressUpdateHandle)
-    worker.signals.result.connect(onResultHandle)
-    worker.signals.finished.connect(onUploadEndHandle)
+    signals.progress.connect(onProgressUpdateHandle)
+    signals.result.connect(onResultHandle)
+    signals.finished.connect(onUploadEndHandle)
 
     threading.Thread(target=worker.run).start()
 
-# def QThreadPoolTaskCB():
-#     threadpool = QThreadPool()
-#     threadpool.start(worker) 
-
 class UploadWorkerSignals(QObject):
-    finished = Signal(int)
+    finished = Signal(object)
     result = Signal(object)
     progress = Signal(int)
 
@@ -104,7 +102,8 @@ class UploadWorker(QRunnable):
     def __init__(self, esptool, port, bin, deviceInfo):
         super(UploadWorker, self).__init__()
 
-        self.signals = UploadWorkerSignals()    
+        global signals
+        signals = UploadWorkerSignals()    
         self.esptool = esptool
         self.port = port
         self.bin = bin
@@ -112,9 +111,8 @@ class UploadWorker(QRunnable):
 
     @Slot()
     def run(self):
-        eraseFlash(self.signals, self.esptool, self.port, self.deviceInfo)
-        uploadBin(self.signals, self.esptool, self.port, self.bin, self.deviceInfo)
-        self.signals.finished.emit(0)
+        error = uploadBin(signals, self.port, self.bin, self.deviceInfo)
+        signals.finished.emit(error)
 
 
 def onProgressUpdateHandle(i):
@@ -123,47 +121,48 @@ def onProgressUpdateHandle(i):
 def onResultHandle(line):
     logLabel.setText(line)
 
-def onUploadEndHandle():
-    print("Upload END")
+def onUploadEndHandle(error):
     uploadButton.setEnabled(True)
     msg = QMessageBox()
-    msg.setIcon(QMessageBox.Information)
-    msg.setWindowTitle("Upload successful")
-    msg.setText("Upload successful")
+    if error == None:
+        msg.setIcon(QMessageBox.Information)
+        msg.setWindowTitle("Upload successful")
+        msg.setText("Upload successful")
+    else:
+        msg.setIcon(QMessageBox.Critical)
+        msg.setWindowTitle("Upload error")
+        msg.setText(error)
     msg.setStandardButtons(QMessageBox.Ok)
     msg.exec_()
 
-def eraseFlash(signals, esptool, port, deviceInfo):
-    command = [ esptool ]
-    command.append("--chip"); command.append(deviceInfo["chip"])
-    command.append("--port"); command.append(port)
-    command.append("--baud"); command.append(str(deviceInfo["speed"]))
-    command.append("erase_flash")
+def esptool_print(message, last_line=False, end="\n"):
+    # if sys.stdout.isatty():
+    #     print("\r%s" % message, end='\n' if last_line else '')
+    # else:
+    #     print(message, end=end)
+    
+    signals.result.emit(message)
+    if message.startswith("Writing at"):
+        i = int(message[message.find("(") + 1 : message.find("%")].strip())
+        signals.progress.emit(i)
 
-    print(command)
-    print(" ".join(command))
-    process = subprocess.Popen(command, stdout=subprocess.PIPE)
-    for line in io.TextIOWrapper(process.stdout, encoding="utf-8"):
-        sys.stdout.write("erase>" + line)
-        signals.result.emit(re.sub(r'[\n\r]+', '', line))
+esptool.print_overwrite = esptool_print
 
-def uploadBin(signals, esptool, port, binFile, deviceInfo):
-    command = [ esptool ]
+def uploadBin(signals, port, binFile, deviceInfo):
+    command = [ ]
     command.append("--chip"); command.append(deviceInfo["chip"])
     command.append("--port"); command.append(port)
     command.append("--baud"); command.append(str(deviceInfo["speed"]))
     command.append("write_flash"); command.append("-z")
+    command.append("--erase-all")
     command.extend(shlex.split(deviceInfo["flag"]))
     command.append("0x1000" if deviceInfo["chip"] == "esp32" else "0x0000"); command.append(binFile)
 
-    print(" ".join(command))
-    process = subprocess.Popen(command, stdout=subprocess.PIPE)
-    for line in io.TextIOWrapper(process.stdout, encoding="utf-8"):
-        sys.stdout.write("upload>" + line)
-        signals.result.emit(re.sub(r'[\n\r]+', '', line))
-        if line.startswith("Writing at"):
-            i = int(line[line.find("(") + 1 : line.find("%")].strip())
-            signals.progress.emit(i)
+    try:
+        esptool.main(command)
+        return None
+    except Exception as e:
+        return str(e)
 
 def updatePortTimerCB():
     ports = serial.tools.list_ports.comports()
@@ -171,7 +170,6 @@ def updatePortTimerCB():
         portCombo.clear()
         for port, desc, hwid in sorted(ports):
             portCombo.addItem(port)
-        # portCombo.setCurrentIndex(-1)
 
 if __name__ == "__main__":
     global widget
@@ -184,6 +182,7 @@ if __name__ == "__main__":
     app = QApplication([])
     widget = Main()
     widget.setWindowTitle("MicroUploader")
+    widget.setWindowFlags(QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMinimizeButtonHint)
     widget.show()
 
     boardCombo = widget.ui.boardCombo
