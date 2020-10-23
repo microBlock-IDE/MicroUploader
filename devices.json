@@ -212,5 +212,5 @@
         "chip": "esp32",
         "flag": "--flash_mode dio --flash_freq 80m --flash_size detect",
         "speed": 115200
-    },
+    }
 ]
